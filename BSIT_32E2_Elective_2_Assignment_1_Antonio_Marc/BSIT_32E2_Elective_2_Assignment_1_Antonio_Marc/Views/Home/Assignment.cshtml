@@ -1,0 +1,57 @@
+﻿@model List<BSIT_32E2_Elective_2_Assignment_1.Models.QuizQuestion>
+
+@{
+    ViewData["Title"] = "Assignment Questions & Answers";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold text-dark m-0">Assignment Questions &amp; Answer Key</h1>
+            <p class="text-muted mb-0">BSIT 32E2 — Elective 2: Assignment 1</p>
+        </div>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Back to Home
+        </a>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="card mb-4 shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-header bg-dark text-white fw-bold py-3 px-4 d-flex justify-content-between align-items-center">
+                <span>Question @item.Number of @Model.Count</span>
+                <span class="badge bg-primary">Multiple Choice</span>
+            </div>
+            <div class="card-body p-4 bg-white">
+                <h5 class="card-title text-dark fw-bold mb-4">@item.QuestionText</h5>
+
+                <div class="list-group mb-4">
+                    @foreach (var opt in item.Options)
+                    {
+                        var isCorrect = opt.Key == item.CorrectOptionKey;
+                        <div class="list-group-item list-group-item-action d-flex align-items-start py-3 @(isCorrect ? "list-group-item-success border-success fw-semibold" : "border-light")">
+                            <span class="badge @(isCorrect ? "bg-success" : "bg-secondary") me-3 mt-1">@opt.Key</span>
+                            <div class="flex-grow-1">
+                                @opt.Value
+                            </div>
+                            @if (isCorrect)
+                            {
+                                <span class="badge bg-success ms-2 align-self-center"><i class="bi bi-check-circle me-1"></i>Correct Answer</span>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="alert alert-info border-0 mb-0 shadow-sm rounded-3 p-3">
+                    <div class="d-flex">
+                        <div class="me-3 fs-5 text-info"><i class="bi bi-lightbulb-fill"></i></div>
+                        <div>
+                            <strong class="text-dark d-block mb-1">Technical Explanation:</strong>
+                            <span class="text-secondary">@item.Explanation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
